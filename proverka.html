@@ -1,0 +1,16 @@
+<title>Проверить Свой Сайт</title>
+<h1>Проверка выдачи Сайта</h1>
+<input type="text" id="searchInput" name="q">
+  <button onclick="doSearch()">Go!</button>
+
+  <script>
+    function doSearch() {
+      let query = document.getElementById("searchInput").value;
+      window.location.href = "results.html?search=" + encodeURIComponent(query);
+    }
+  </script>
+<li> Проверьте, есть ли Ваш сайт в Интернете? </li>
+<li> </li>
+<li>Если нет <a href="mailto:metaspiderr@gmail.com">напишите сюда</a> и мы добавим Ваш сайт в Наш индекс!</li>
+<li> </li>
+<li> <a href="inexx.html">Главная</a> </li>
