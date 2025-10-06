@@ -13,28 +13,25 @@
 
     <a href="https://metaspiderr.github.io/metaspider.github.io/" style="color:blue; text-decoration: underline;">MetaSpider</a>
 
-<input type="text" id="searchInput" name="q">
-  <button onclick="doSearch()">Internet Search</button>
-
-    <form action="results.html" method="get" onsubmit="return submitForm();">
+<form action="results.html" method="get" onsubmit="return submitForm();">
   <input type="text" name="q">
   <input type="submit" value=">>>">
 </form>
+    <form action="https://www.mmnt.ru/get?st=" method="get" onsubmit="return submitForm();">
+    <button onclick="doSearch1()">FTP-Search</button>
+
+  <script>
+    function doSearch1() {
+      let query = document.getElementById("searchInput").value;
+      window.location.href = "https://www.mmnt.ru/get?st=" + encodeURIComponent(query);
+    }
+  </script>
 
 
   <script>
     function doSearch() {
       let query = document.getElementById("searchInput").value;
       window.location.href = "https://metaspiderr.github.io/metaspider.github.io/results.html#gsc.tab=0&gsc.q=" + encodeURIComponent(query);
-    }
-  </script>
-
-<button onclick="doSearch1()">FTP-Search</button>
-
-  <script>
-    function doSearch1() {
-      let query = document.getElementById("searchInput").value;
-      window.location.href = "https://www.mmnt.ru/get?st=" + encodeURIComponent(query);
     }
   </script>
 
@@ -56,6 +53,7 @@
 </body>
 
 </html>
+
 
 
 
