@@ -16,6 +16,12 @@
 <input type="text" id="searchInput" name="q">
   <button onclick="doSearch()">Internet Search</button>
 
+    <form action="results.html" method="get" onsubmit="return submitForm();">
+  <input type="text" name="q">
+  <input type="submit" value=">>>">
+</form>
+
+
   <script>
     function doSearch() {
       let query = document.getElementById("searchInput").value;
@@ -50,6 +56,7 @@
 </body>
 
 </html>
+
 
 
 
