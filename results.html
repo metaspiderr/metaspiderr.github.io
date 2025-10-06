@@ -17,11 +17,11 @@
     <input type="text" name="q">
   <input type="submit" value=">>>">
 
-    <form action="https://www.mmnt.ru/get?st=" method="get" onsubmit="return submitForm1();">
-    <button onclick="doSearch1()">FTP-Search</button>
+
+    <button onclick="doSearch()">FTP-Search</button>
 
   <script>
-    function doSearch1() {
+    function doSearch() {
       let query = document.getElementById("searchInput").value;
       window.location.href = "https://www.mmnt.ru/get?st=" + encodeURIComponent(query);
     }
@@ -53,6 +53,7 @@
 </body>
 
 </html>
+
 
 
 
