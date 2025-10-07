@@ -4,6 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>MetaSpider - World Search Engine!</title>
+<link rel="icon" href="fav.png" type="image/png">
 <style type="text/css">
 body {
   font-family: sans-serif;
@@ -50,7 +51,7 @@ input[type="submit"] {
 
   function submitForm() {
     var query = document.forms[0].q.value;
-    window.location.href = "https://metaspiderr.github.io/metaspider.github.io/results.html#gsc.tab=0&gsc.q=" + encodeURIComponent(query);
+    window.location.href = "results.html#gsc.tab=0&gsc.q=" + encodeURIComponent(query);
     return false; // Prevent the form from submitting normally
   }
 </script>
@@ -59,7 +60,9 @@ input[type="submit"] {
 <body onload="focusOnLoad()">
 
 <div id="content">
+  <br>
   <img src="logoo.png" alt="MetaSpider" width="300">
+  <br>
   <br>
   <form action="results.html" method="get" onsubmit="return submitForm();">
     <input type="text" name="q">
@@ -67,10 +70,27 @@ input[type="submit"] {
     <br>
     <input type="radio" name="lr" value="lang_ru" checked> World Search
     <input type="radio" name="lr" value=""> American Search
-    <a href="https://disk.yandex.ru/d/mdYkGgaEKLeJCg">LKI Browser</a>
   </form>
   <br>
   <a href="about.html">About "MetaSpider"</a>
+<li> <a href="https://accounts.google.com/signup">Free Mail!</a> </li>
+  <br>
+  <br>
+  <a href="https://disk.yandex.ru/d/mdYkGgaEKLeJCg" target="_blank">
+<img src="http://metaspiderr.github.io/metaspider.github.io/banner.png"
+alt="LKI Browser"
+width=400 height=125 border=0></a>
+  <br>
+  <br>
+  <a href="https://top100.rambler.ru/navi/" target="_blank">
+<img src="http://metaspiderr.github.io/metaspider.github.io/top100.png"
+alt="Rambler 100"
+width=88 height=35 border=0></a>
+
+  <a href="https://webmaster.yandex.ru/siteinfo/?site=metaspiderr.github.io" target="_blank">
+<img src="http://metaspiderr.github.io/metaspider.github.io/yaweb.png"
+alt="Yandex Web"
+width=88 height=35 border=0></a>
 </div>
 
 <div id="footer">
@@ -81,5 +101,3 @@ input[type="submit"] {
 </body>
 
 </html>
-
-
