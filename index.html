@@ -42,6 +42,11 @@ input[type="submit"] {
     font-size: 16px;
     padding: 5px 10px;
 }
+
+/* Style for the random banner */
+.random-banner {
+  margin-top: 10px;
+}
 </style>
 
 <script type="text/javascript">
@@ -54,10 +59,58 @@ input[type="submit"] {
     window.location.href = "results.html#gsc.tab=0&gsc.q=" + encodeURIComponent(query);
     return false; // Prevent the form from submitting normally
   }
+
+  // Function to randomly display a banner
+  function displayRandomBanner() {
+    const banners = [
+      {
+        url: "https://disk.yandex.ru/d/mdYkGgaEKLeJCg",
+        imageUrl: "http://metaspiderr.github.io/metaspider.github.io/banner.png",
+        alt: "LKI Browser",
+        width: 400,
+        height: 125
+      },
+      {
+        url: "https://disk.yandex.ru/d/mdYkGgaEKLeJCg", // Replace with the real URL
+        imageUrl: "http://metaspiderr.github.io/metaspider.github.io/banner.png",  //Replace with your banner 2 URL
+        alt: "Banner",
+        width: 400,
+        height: 125
+      },
+      {
+        url: "https://disk.yandex.ru/d/mdYkGgaEKLeJCg", // Replace with the real URL
+        imageUrl: "http://metaspiderr.github.io/metaspider.github.io/banner.png",  //Replace with your banner 3 URL
+        alt: "Banner",
+        width: 400,
+        height: 125
+      }
+      // Add more banners here as needed
+    ];
+
+    // Get a random index
+    const randomIndex = Math.floor(Math.random() * banners.length);
+
+    // Get the selected banner
+    const selectedBanner = banners[randomIndex];
+
+    // Create the HTML for the banner
+    const bannerHTML = `
+      <a href="${selectedBanner.url}" target="_blank">
+        <img src="${selectedBanner.imageUrl}" alt="${selectedBanner.alt}" width="${selectedBanner.width}" height="${selectedBanner.height}" border="0">
+      </a>
+    `;
+
+    // Find the banner container and insert the banner HTML
+    const bannerContainer = document.getElementById("randomBannerContainer");
+    if (bannerContainer) {
+      bannerContainer.innerHTML = bannerHTML;
+    }
+  }
+
 </script>
 
 </head>
-<body onload="focusOnLoad()">
+<body onload="focusOnLoad(); displayRandomBanner();">  <!-- Call displayRandomBanner on page load -->
 
 <div id="content">
   <br>
@@ -77,10 +130,12 @@ input[type="submit"] {
   <br>
   <i>Реклама:</i>
   <br>
-  <a href="https://disk.yandex.ru/d/mdYkGgaEKLeJCg" target="_blank">
-<img src="http://metaspiderr.github.io/metaspider.github.io/banner.png"
-alt="LKI Browser"
-width=400 height=125 border=0></a>
+
+  <!-- Container for the random banner -->
+  <div id="randomBannerContainer" class="random-banner">
+    <!--  The banner will be inserted here by JavaScript -->
+  </div>
+
   <br>
   <br>
   <a href="https://top100.rambler.ru/navi/" target="_blank">
@@ -107,6 +162,7 @@ width=88 height=35 border=0></a>
 </body>
 
 </html>
+
 
 
 
