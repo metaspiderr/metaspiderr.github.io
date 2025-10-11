@@ -1,2 +1,22 @@
+<html>
+
 <title>Error 404 - MetaSpider</title>
-<h1> <a href="http://metaspiderr.github.io/">Error 404. Go to the Main Page.</a> </h1>
+<h1> <a href="index.html">Error 404. Go to the Main Page.</a> </h1>
+
+<br>
+<br>
+ <i>Возможно, в ссылке была опечатка или данной страницы не существует.</i>
+<br>
+<br>
+
+<input type="text" id="searchInput" name="q">
+  <button onclick="doSearch()">SEARCH</button>
+
+  <script>
+    function doSearch() {
+      let query = document.getElementById("searchInput").value;
+      window.location.href = "results.html#gsc.tab=0&gsc.q=" + encodeURIComponent(query);
+    }
+  </script>
+
+</html>
