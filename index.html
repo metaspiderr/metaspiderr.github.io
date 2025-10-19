@@ -47,15 +47,148 @@ input[type="submit"] {
 .random-banner {
   margin-top: 10px;
 }
+
+/* Styles for Search History */
+#searchHistoryContainer {
+  margin-top: 15px;
+  max-width: 380px; /* Adjust to match search input width + button */
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left; /* Align text to the left within the container */
+  padding: 5px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+}
+
+#searchHistoryContainer h4 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.history-item {
+  padding: 3px 5px;
+  cursor: pointer;
+  color: #0000ff; /* Link-like color */
+  text-decoration: underline;
+  font-size: 14px;
+  display: block; /* Each item on its own line */
+}
+
+.history-item:hover {
+  background-color: #e0e0e0;
+  text-decoration: none;
+}
+
+#clearHistoryBtn {
+  margin-top: 10px;
+  font-size: 12px;
+  padding: 3px 8px;
+  cursor: pointer;
+  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+#clearHistoryBtn:hover {
+  background-color: #e0e0e0;
+}
+
 </style>
 
 <script type="text/javascript">
+  const SEARCH_HISTORY_KEY = 'metaSpiderSearchHistory';
+  const MAX_HISTORY_ITEMS = 5;
+
   function focusOnLoad() {
     document.forms[0].q.focus();
   }
 
+  // --- Search History Functions ---
+
+  function loadSearchHistory() {
+    const historyJson = localStorage.getItem(SEARCH_HISTORY_KEY);
+    return historyJson ? JSON.parse(historyJson) : [];
+  }
+
+  // Сохраняет историю поиска в localStorage
+  function saveSearchHistory(history) {
+    localStorage.setItem(SEARCH_HISTORY_KEY, JSON.stringify(history));
+  }
+  // Добавляет запрос в историю
+  function addQueryToHistory(query) {
+    query = query.trim();
+    if (!query) return; // Не добавляем пустые запросы
+
+    let history = loadSearchHistory();
+
+    // Удаляем дубликаты, если запрос уже есть, чтобы переместить его наверх
+    history = history.filter(item => item !== query);
+
+    // Добавляем новый запрос в начало
+    history.unshift(query);
+
+    // Обрезаем историю до максимального количества элементов
+    if (history.length > MAX_HISTORY_ITEMS) {
+      history = history.slice(0, MAX_HISTORY_ITEMS);
+    }
+
+    saveSearchHistory(history);
+  }
+
+  // Отображает историю поиска на странице
+  function displaySearchHistory() {
+    const historyContainer = document.getElementById('searchHistoryContainer');
+    if (!historyContainer) return;
+
+    const history = loadSearchHistory();
+    historyContainer.innerHTML = ''; // Очищаем текущее содержимое
+
+    if (history.length > 0) {
+      const heading = document.createElement('h4');
+      heading.textContent = 'Ваши недавние запросы:';
+      historyContainer.appendChild(heading);
+
+      history.forEach(query => {
+        const item = document.createElement('span'); // Используем span для inline-block или div для block
+        item.className = 'history-item';
+        item.textContent = query;
+        item.onclick = function() {
+          document.forms[0].q.value = query; // Заполняем поле поиска
+          document.forms[0].q.focus(); // Фокусируемся на поле
+        };
+        historyContainer.appendChild(item);
+      });
+
+      const clearBtn = document.createElement('button');
+      clearBtn.id = 'clearHistoryBtn';
+      clearBtn.textContent = 'Очистить историю';
+      clearBtn.onclick = clearSearchHistory;
+      historyContainer.appendChild(clearBtn);
+
+    } else {
+      // Можно добавить сообщение, если история пуста, или просто ничего не показывать
+      // historyContainer.innerHTML = '<p style="font-size: 12px; color: #888;">История поиска пуста.</p>';
+    }
+  }
+
+  // Очищает историю поиска
+  function clearSearchHistory() {
+    if (confirm('Вы увейрены, что хотите очистить историю поиска?')) {
+      localStorage.removeItem(SEARCH_HISTORY_KEY);
+      displaySearchHistory(); // Обновляем отображение
+    }
+  }
+
+  // --- Existing Functions Modified ---
+
   function submitForm() {
     var query = document.forms[0].q.value;
+
+    // Добавляем запрос в историю ПЕРЕД перенаправлением
+    addQueryToHistory(query);
+
     window.location.href = "results.html#gsc.tab=0&gsc.q=" + encodeURIComponent(query);
     return false; // Prevent the form from submitting normally
   }
@@ -67,20 +200,6 @@ input[type="submit"] {
         url: "https://disk.yandex.ru/d/mdYkGgaEKLeJCg",
         imageUrl: "http://metaspiderr.github.io/banner.png",
         alt: "LKI Browser",
-        width: 400,
-        height: 125
-      },
-      {
-        url: "https://disk.yandex.ru/d/mdYkGgaEKLeJCg", // Replace with the real URL
-        imageUrl: "http://metaspiderr.github.io/banner.png",  //Replace with your banner 2 URL
-        alt: "Banner",
-        width: 400,
-        height: 125
-      },
-      {
-        url: "https://disk.yandex.ru/d/mdYkGgaEKLeJCg", // Replace with the real URL
-        imageUrl: "http://metaspiderr.github.io/banner.png",  //Replace with your banner 3 URL
-        alt: "Banner",
         width: 400,
         height: 125
       }
@@ -110,20 +229,27 @@ input[type="submit"] {
 </script>
 
 </head>
-<body onload="focusOnLoad(); displayRandomBanner();">  <!-- Call displayRandomBanner on page load -->
+<body onload="focusOnLoad(); displayRandomBanner(); displaySearchHistory();">  <!-- Call displaySearchHistory on page load -->
 
 <div id="content">
-  <br>
+<br>
   <img src="logoo.png" alt="MetaSpider" width="300">
   <br>
   <br>
   <form action="results.html" method="get" onsubmit="return submitForm();">
-    <input type="text" name="q">
+    <input type="text" name="q" autocomplete="off"> <!-- autocomplete="off" чтобы не конфликтовать с нашей историей -->
     <input type="submit" value=">>>">
     <br>
     <input type="radio" name="lr" value="lang_ru" checked> Русский поиск
     <input type="radio" name="lr" value=""> Мировой поиск
   </form>
+  <br>
+
+  <!-- Container for Search History -->
+  <div id="searchHistoryContainer">
+    <!-- Search history items will be inserted here by JavaScript -->
+  </div>
+
   <br>
   <a href="about.html">О сайте "MetaSpider"</a>
 <li> <a href="https://accounts.google.com/signup">Создать бесплатную эл.почту!</a> </li>
@@ -162,29 +288,3 @@ width=88 height=35 border=0></a>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
